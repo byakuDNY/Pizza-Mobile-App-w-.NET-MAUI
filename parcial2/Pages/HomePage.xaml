@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:parcial2.ViewModels"
+             xmlns:models="clr-namespace:parcial2.Models"
+             x:Class="parcial2.Pages.HomePage"
+             Title="HomePage"
+             Padding="15"
+             x:DataType="vm:HomeViewModel">
+    <ScrollView>
+        <VerticalStackLayout>
+            <FlexLayout BindableLayout.ItemsSource="{Binding Pizzas}"
+                        Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:Pizza">
+                        <Border StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                BackgroundColor="PaleGoldenrod"
+                                Padding="0"
+                                Margin="2"
+                                FlexLayout.Basis="50%">
+                            <Grid RowDefinitions="150, Auto, Auto, Auto"
+                                  RowSpacing="5">
+                                <Image Grid.Row="0"
+                                       Source="{Binding Image}"
+                                       HeightRequest="150"
+                                       WidthRequest="130"/>
+                                <Label Grid.Row="1"
+                                       Text="{Binding Name}"
+                                       HorizontalOptions="Center"
+                                       FontSize="20"/>
+                                <Label Grid.Row="2"
+                                       Text="{Binding Price, StringFormat='${0:N2}'}"
+                                       FontAttributes="Bold"
+                                       FontSize="20"/>
+                                <Button Grid.Row="3"
+                                        Text="View More"
+                                        HorizontalOptions="Center"
+                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},
+                                                  Path=GoToDetailsPageCommand}"
+                                                  CommandParameter="{Binding .}"/>
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type vm:HomeViewModel}},
+                                               Path=GoToDetailsPageCommand}"
+                                               CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
